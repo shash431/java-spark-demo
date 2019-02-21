@@ -72,10 +72,10 @@ public class ClientSteps implements En {
             assertEquals(listResponse.getBody().getArray().getJSONObject(0).get("lastName").toString(), lastName);
         });
 
-        When("^I update the last name of the client number (\\d+) with the name (\\w+) and last name (\\w+) to the new last name (\\w+)$",
-                (Integer id,String firstName, String lastName, String newLastName) ->{
+        When("^I update the last name of the client number (\\d+) with the name (\\w+) and last name (\\w+) to the new last name (\\w+)",
+                (Integer id, String firstName, String lastName, String newLastName) ->{
             HttpResponse<String> updateResponse;
-            String body = "{\"id\":\""+id+"\"firstName\":\""+firstName+"\",\"lastName\":"+lastName+"}";
+            String body = "{\"Id\":\""+id+"\",\"firstName\":\""+firstName+"\",\"lastName\":"+newLastName+"}";
             try {
                 updateResponse = Unirest.put("http://localhost:" + port + "/client")
                         .body(body)
@@ -88,7 +88,7 @@ public class ClientSteps implements En {
             assertTrue(updateResponse.getBody().contains("Client record is saved !"));
         });
 
-        Then("I should list (\\d+) client with the name (\\w+) and last name (\\w+) when I list$",
+        Then("I should list (\\d+) client with the name (\\w+) and updated last name (\\w+) when I list$",
                 (Integer count, String firstName, String lastName)-> {
             HttpResponse<JsonNode> listResponse;
             // list items
